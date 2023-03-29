@@ -1,3 +1,8 @@
+# This is the first Tkinter-used project I've ever worked on with py, So alot of issues of reduced performance is gonna be there
+# and, I'd extremely like to hear your feedbacks of any weekness points
+# Ebrahim Ramadan Diab 320220029 section02
+
+
 import tkinter as tk
 from tkinter import *
 from abc import ABC, abstractmethod
@@ -60,9 +65,11 @@ root.resizable(True, True)
 def open_add_windows():
     new_add_window = tk.Toplevel(root)
     new_add_window.title("Adding window")
-    new_add_window.geometry("600x400")
+    new_add_window.geometry("400x200")
+    #################
     label = Label(new_add_window, text='This is a new windows')
     label.pack()
+    ##################
     name_label = Label(new_add_window, text="name ")
     name_label.pack()
     name_entry = Entry(new_add_window)
@@ -90,7 +97,7 @@ def open_add_windows():
     The_final_Addbtn.pack()
 
 
-def Update_an_exsiting_emp(display_employees):
+def Update_an_exsiting_emp():
     new_update_window = tk.Toplevel(root)
     new_update_window.title("Updating window")
     new_update_window.geometry("400x300")
@@ -98,7 +105,7 @@ def Update_an_exsiting_emp(display_employees):
     label = Label(new_update_window, text='This is a new windows')
     label.pack()
 
-    name_label = Label(new_update_window, text="existing nameto update ")
+    name_label = Label(new_update_window, text="existing name to update ")
     name_label.pack()
     name_entry = Entry(new_update_window)
     name_entry.pack()
@@ -118,23 +125,37 @@ def Update_an_exsiting_emp(display_employees):
 
     def update_employee_btn():
         existing_name = name_entry.get()
-        if existing_name in empl:
-            new_name = new_name_entry.get()
-            new_age = new_age_entry.get()
-            new_fees = new_fees_entry.get()
-            updated = E1.Update_info(
-                existing_name, new_name, new_age, new_fees)
+        new_name = new_name_entry.get()
+        new_age = new_age_entry.get()
+        new_fees = new_fees_entry.get()
+        updated = E1.Update_info(
+            existing_name, new_name, new_age, new_fees)
+        if updated:
             name_entry.delete(0, END)
             new_name_entry.delete(0, END)
             new_age_entry.delete(0, END)
             new_fees_entry.delete(0, END)
-        else:
-            ValueErr = Label(new_update_window, text="name not exist")
-            ValueErr.pack()
 
     The_final_updbtn = tk.Button(
         new_update_window, text='update', command=update_employee_btn)
     The_final_updbtn.pack()
+
+
+def Delete_emplo():
+    new_del_window = Toplevel(root)
+    new_del_window.title("Deleting employees")
+    new_del_window.geometry("200x200")
+    Name_Label = Label(new_del_window, text="name to delete ")
+    Name_Label.pack()
+    Name_entry = Entry(new_del_window)
+    Name_entry.pack()
+
+    def To_Delete():
+        Del_Name = Name_entry.get()
+        E1.delete_employee(Del_Name)
+        Name_entry.delete(0, END)
+    DEL_BTN = tk.Button(new_del_window, text="Delete", command=To_Delete)
+    DEL_BTN.pack()
 
 
 def display_employees():
@@ -154,9 +175,15 @@ init_add_btn = tk.Button(
     root, text='Add a new employee', command=open_add_windows, padx=10, pady=10)
 # make it have the full width whatever the widget
 init_add_btn.pack(fill=tk.BOTH, expand=True)
+
 init_update_btn = tk.Button(
     root, text='Update an existing employee', command=Update_an_exsiting_emp, padx=10, pady=10)
 init_update_btn.pack(fill=tk.BOTH, expand=True)
+
+init_delete_btn = tk.Button(
+    root, text="Delete an existing employee", command=Delete_emplo, padx=10, pady=10)
+init_delete_btn.pack(fill=tk.BOTH, expand=True)
+
 init_display_btn = tk.Button(
     root, text='Display all employees', command=display_employees, padx=10, pady=10)
 init_display_btn.pack(fill=tk.BOTH, expand=True)
