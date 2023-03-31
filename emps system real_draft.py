@@ -6,8 +6,9 @@
 import tkinter as tk
 from tkinter import *
 from abc import ABC, abstractmethod
-import numpy as np
-from numpy import *
+# import numpy as np
+# from numpy import *
+# I thought it'd be better in handling-wise to store in no arrays
 
 
 class AbstractClass(ABC):
@@ -162,19 +163,30 @@ def display_employees():
     employees = E1.Displaying()
     employee_strings = [
         f"{name} ({age} yrs, {fees} egp)" for name, age, fees in zip(*employees)]
+    # a list complehension that iterates over the employees var list using zip func() to group the name, age, and fees of each employee
+    # and * operator is unpacking the employees list (because it's returned as tuple i think) into arguments for the zip funciton
+
+    employee_strings_as_a_list = '\n'.join(employee_strings)
+    with open("Employees list.txt", 'w') as file:
+        file.write(employee_strings_as_a_list)
+    # this way we store  & show the info in a txt file, file auto closes when the open function (in write mode parameter'w') ends (because I used with statement)
+
     display_window = tk.Toplevel(root)
     display_window.title("Display Employees")
     display_window.geometry("400x400")
-    display_label = Label(display_window, text="\n".join(
-        employee_strings), justify=LEFT)
+    display_label = Label(
+        display_window, text=employee_strings_as_a_list, justify=LEFT)
     display_label.pack()
     return employee_strings
+    # this way we store & show the info in the window
 
 
 init_add_btn = tk.Button(
     root, text='Add a new employee', command=open_add_windows, padx=10, pady=10)
 # make it have the full width whatever the widget
 init_add_btn.pack(fill=tk.BOTH, expand=True)
+# with open('Employees list', 'w') as file:
+#     file.write(open_add_windows.__getattribute__)
 
 init_update_btn = tk.Button(
     root, text='Update an existing employee', command=Update_an_exsiting_emp, padx=10, pady=10)
